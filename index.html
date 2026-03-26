@@ -21,7 +21,7 @@
     }
 
     html, body {
-      width: 100%; height: 100%;
+      width: 100%; height: 100svh;
       overflow: hidden;
       font-family: 'Outfit', sans-serif;
     }
@@ -32,7 +32,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: 40px 60px 48px;
+      padding: clamp(12px, 2.5vh, 40px) clamp(16px, 4vw, 60px) clamp(10px, 2vh, 40px);
       position: relative;
     }
 
@@ -72,22 +72,22 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
+      gap: clamp(4px, 1vh, 10px);
       width: 100%;
     }
 
     .logo-wrap {
       background: rgba(255,255,255,.97);
-      border-radius: 24px;
-      padding: 18px 48px;
+      border-radius: clamp(14px, 2vw, 24px);
+      padding: clamp(8px, 1.5vh, 18px) clamp(20px, 4vw, 48px);
       box-shadow: 0 8px 40px rgba(0,0,0,.35), 0 0 0 2px rgba(245,168,0,.4);
       animation: fadeDown .6s ease both;
     }
-    .logo-wrap img { height: 110px; display: block; }
+    .logo-wrap img { height: clamp(55px, 10vh, 110px); display: block; }
 
     .subtitle {
       color: rgba(255,255,255,.75);
-      font-size: 1.1rem;
+      font-size: clamp(.65rem, 1.1vw, 1.1rem);
       font-weight: 600;
       letter-spacing: .12em;
       text-transform: uppercase;
@@ -101,7 +101,7 @@
       animation: fadeDown .7s .15s ease both;
     }
     .greeting h1 {
-      font-size: clamp(2rem, 4vw, 3rem);
+      font-size: clamp(1.1rem, 3.2vw, 2.6rem);
       font-weight: 800;
       color: var(--white);
       line-height: 1.15;
@@ -113,9 +113,9 @@
       background-clip: text;
     }
     .greeting p {
-      margin-top: 8px;
+      margin-top: clamp(2px, .6vh, 8px);
       color: rgba(255,255,255,.65);
-      font-size: 1.15rem;
+      font-size: clamp(.7rem, 1.2vw, 1.1rem);
       font-weight: 400;
     }
 
@@ -124,9 +124,9 @@
       position: relative; z-index: 1;
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 28px;
+      gap: clamp(10px, 2vh, 28px);
       width: 100%;
-      max-width: 900px;
+      max-width: min(900px, 90vw);
       animation: fadeUp .7s .2s ease both;
     }
 
@@ -135,10 +135,10 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 18px;
-      padding: 36px 20px;
+      gap: clamp(6px, 1.5vh, 18px);
+      padding: clamp(12px, 2.8vh, 36px) clamp(10px, 2vw, 20px);
       border: none;
-      border-radius: 28px;
+      border-radius: clamp(16px, 2.5vw, 28px);
       cursor: pointer;
       position: relative;
       overflow: hidden;
@@ -188,7 +188,8 @@
 
     /* icon circle */
     .btn-icon {
-      width: 90px; height: 90px;
+      width: clamp(48px, 8vh, 90px);
+      height: clamp(48px, 8vh, 90px);
       border-radius: 50%;
       background: rgba(255,255,255,.15);
       display: flex;
@@ -200,7 +201,8 @@
     .kiosk-btn:hover .btn-icon { background: rgba(255,255,255,.25); }
 
     .btn-icon svg {
-      width: 48px; height: 48px;
+      width: clamp(26px, 4.5vh, 48px);
+      height: clamp(26px, 4.5vh, 48px);
       fill: none;
       stroke: var(--white);
       stroke-width: 1.7;
@@ -210,7 +212,7 @@
     }
 
     .btn-label {
-      font-size: 1.45rem;
+      font-size: clamp(.85rem, 2vw, 1.45rem);
       font-weight: 700;
       color: var(--white);
       text-align: center;
@@ -218,7 +220,7 @@
       text-shadow: 0 2px 8px rgba(0,0,0,.35);
     }
     .btn-desc {
-      font-size: .92rem;
+      font-size: clamp(.65rem, 1.1vw, .92rem);
       font-weight: 400;
       color: rgba(255,255,255,.72);
       text-align: center;
@@ -228,7 +230,7 @@
     /* ── CLOCK ─────────────────────────────────────── */
     .clock-wrap {
       position: fixed;
-      top: 24px; right: 36px;
+      top: clamp(10px, 2vh, 24px); right: clamp(14px, 2.5vw, 36px);
       z-index: 10;
       display: flex;
       flex-direction: column;
@@ -237,7 +239,7 @@
       animation: fadeDown .6s .2s ease both;
     }
     .clock-time {
-      font-size: 2.6rem;
+      font-size: clamp(1.4rem, 3vw, 2.6rem);
       font-weight: 800;
       letter-spacing: .06em;
       line-height: 1;
@@ -249,14 +251,14 @@
       filter: drop-shadow(0 2px 8px rgba(245,168,0,.45));
     }
     .clock-ampm {
-      font-size: 1rem;
+      font-size: clamp(.6rem, 1vw, 1rem);
       font-weight: 700;
       color: rgba(245,168,0,.7);
       letter-spacing: .12em;
       line-height: 1;
     }
     .clock-date {
-      font-size: .78rem;
+      font-size: clamp(.55rem, .85vw, .78rem);
       font-weight: 500;
       color: rgba(255,255,255,.55);
       letter-spacing: .06em;
