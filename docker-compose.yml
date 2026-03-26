@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  # Aplicativo PHP 8.4
+  atencion_customer:
+    image: php:8.5-apache
+    container_name: atencion_customer
+    restart: always
+    ports:
+      - "8081:80"
+    # Instalamos extensiones y activamos rewrite antes de iniciar Apache
+    command: >
+      sh -c "apt-get update && apt-get install -y libzip-dev unzip libpng-dev
+      && docker-php-ext-install pdo pdo_mysql mysqli zip calendar
+      && a2enmod rewrite 
+      && apache2-foreground"
+    volumes:
+      - .:/var/www/html
+
+  # Base de Datos MariaDB
+  db_atencion_customer:
+    image: mariadb:11.8 # Nota: La versión 12.2 aún no es la estable oficial, te recomiendo la 11.4
+    container_name: db_atencion_customer
+    restart: always
+    ports:
+      - "3307:3306"
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: bd_atencion_customer
+      MARIADB_USER: atencion_customer
+      MARIADB_PASSWORD: 2026@.
+    volumes:
+      - atencion_customer_data:/var/lib/mysql
+
+# Los volúmenes van fuera de "services"
+volumes:
+  atencion_customer_data:
+    driver: local
