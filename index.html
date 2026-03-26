@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SERSA – Atención al Usuario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue-dark:  #0d2e6e;
+      --blue-mid:   #1a5cad;
+      --blue-light: #3b8fe8;
+      --gold:       #f5a800;
+      --gold-light: #ffd166;
+      --white:      #ffffff;
+      --bg:         #0a1a3c;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      font-family: 'Outfit', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 40px 60px 48px;
+      position: relative;
+    }
+
+    /* ── Fondo animado ─────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 15% 20%, rgba(26,92,173,.35) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 45% at 85% 80%, rgba(245,168,0,.18) 0%, transparent 65%),
+        linear-gradient(160deg, #05112a 0%, #0d2e6e 50%, #051229 100%);
+      z-index: 0;
+      animation: bgShift 8s ease-in-out infinite alternate;
+    }
+    @keyframes bgShift {
+      from { filter: brightness(1); }
+      to   { filter: brightness(1.08); }
+    }
+
+    /* partícula decorativa */
+    body::after {
+      content: '';
+      position: fixed;
+      width: 520px; height: 520px;
+      border-radius: 50%;
+      border: 2px solid rgba(245,168,0,.12);
+      top: -120px; right: -120px;
+      z-index: 0;
+      animation: spin 25s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── HEADER ────────────────────────────────────── */
+    header {
+      position: relative; z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .logo-wrap {
+      background: rgba(255,255,255,.97);
+      border-radius: 24px;
+      padding: 18px 48px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.35), 0 0 0 2px rgba(245,168,0,.4);
+      animation: fadeDown .6s ease both;
+    }
+    .logo-wrap img { height: 110px; display: block; }
+
+    .subtitle {
+      color: rgba(255,255,255,.75);
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      animation: fadeDown .7s .1s ease both;
+    }
+
+    /* ── GREETING ──────────────────────────────────── */
+    .greeting {
+      position: relative; z-index: 1;
+      text-align: center;
+      animation: fadeDown .7s .15s ease both;
+    }
+    .greeting h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.15;
+    }
+    .greeting h1 span {
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .greeting p {
+      margin-top: 8px;
+      color: rgba(255,255,255,.65);
+      font-size: 1.15rem;
+      font-weight: 400;
+    }
+
+    /* ── BUTTONS GRID ──────────────────────────────── */
+    .btn-grid {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      width: 100%;
+      max-width: 900px;
+      animation: fadeUp .7s .2s ease both;
+    }
+
+    .kiosk-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      padding: 36px 20px;
+      border: none;
+      border-radius: 28px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      transition: transform .18s ease, box-shadow .18s ease;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    /* shimmer on hover */
+    .kiosk-btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.15) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity .2s;
+      border-radius: inherit;
+    }
+    .kiosk-btn:hover::after { opacity: 1; }
+
+    .kiosk-btn:active {
+      transform: scale(.96) !important;
+    }
+
+    .kiosk-btn:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 50px rgba(0,0,0,.45), 0 0 0 3px rgba(245,168,0,.5);
+    }
+
+    /* --- button colour variants --- */
+    .btn-pagos {
+      background: linear-gradient(145deg, #1a5cad, #0d2e6e);
+      box-shadow: 0 12px 35px rgba(13,46,110,.6);
+    }
+    .btn-tramites {
+      background: linear-gradient(145deg, #0d7a4e, #054d31);
+      box-shadow: 0 12px 35px rgba(5,77,49,.6);
+    }
+    .btn-consultas {
+      background: linear-gradient(145deg, #7c3aed, #4c1d95);
+      box-shadow: 0 12px 35px rgba(76,29,149,.6);
+    }
+    .btn-reclamos {
+      background: linear-gradient(145deg, #b45309, #7c2d12);
+      box-shadow: 0 12px 35px rgba(124,45,18,.6);
+    }
+
+    /* icon circle */
+    .btn-icon {
+      width: 90px; height: 90px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s;
+      flex-shrink: 0;
+    }
+    .kiosk-btn:hover .btn-icon { background: rgba(255,255,255,.25); }
+
+    .btn-icon svg {
+      width: 48px; height: 48px;
+      fill: none;
+      stroke: var(--white);
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,.3));
+    }
+
+    .btn-label {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--white);
+      text-align: center;
+      letter-spacing: .02em;
+      text-shadow: 0 2px 8px rgba(0,0,0,.35);
+    }
+    .btn-desc {
+      font-size: .92rem;
+      font-weight: 400;
+      color: rgba(255,255,255,.72);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    /* ── CLOCK ─────────────────────────────────────── */
+    .clock-wrap {
+      position: fixed;
+      top: 24px; right: 36px;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 2px;
+      animation: fadeDown .6s .2s ease both;
+    }
+    .clock-time {
+      font-size: 2.6rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      line-height: 1;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: none;
+      filter: drop-shadow(0 2px 8px rgba(245,168,0,.45));
+    }
+    .clock-ampm {
+      font-size: 1rem;
+      font-weight: 700;
+      color: rgba(245,168,0,.7);
+      letter-spacing: .12em;
+      line-height: 1;
+    }
+    .clock-date {
+      font-size: .78rem;
+      font-weight: 500;
+      color: rgba(255,255,255,.55);
+      letter-spacing: .06em;
+      text-transform: capitalize;
+    }
+
+    /* ── FOOTER ────────────────────────────────────── */
+    footer {
+      position: relative; z-index: 1;
+      color: rgba(255,255,255,.38);
+      font-size: .82rem;
+      letter-spacing: .06em;
+      animation: fadeUp .6s .3s ease both;
+    }
+
+    /* ── ANIMATIONS ────────────────────────────────── */
+    @keyframes fadeDown {
+      from { opacity:0; transform:translateY(-22px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(22px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- CLOCK -->
+  <div class="clock-wrap">
+    <span class="clock-time" id="clock-time">00:00:00</span>
+    <span class="clock-ampm" id="clock-ampm">AM</span>
+    <span class="clock-date" id="clock-date"></span>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-wrap">
+      <img src="logotipo_SERSA2021.png" alt="SERSA – Servicios Eléctricos Rioja S.A." />
+    </div>
+    <p class="subtitle">Sistema de Atención al Usuario</p>
+  </header>
+
+  <!-- GREETING -->
+  <div class="greeting">
+    <h1>¡Bienvenido! <span>¿En qué podemos ayudarte?</span></h1>
+    <p>Selecciona una opción para continuar</p>
+  </div>
+
+  <!-- BUTTONS -->
+  <div class="btn-grid">
+
+    <!-- OSINERGMIN -->
+    <button id="btn-osinergmin" class="kiosk-btn btn-consultas" onclick="handleBtn('osinergmin')">
+      <div class="btn-icon">
+        <svg viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="10"/>
+          <path d="M12 8v4M12 16h.01"/>
+        </svg>
+      </div>
+      <span class="btn-label">OSINERGMIN</span>
+      <span class="btn-desc">Portal del organismo regulador de energía y minería</span>
+    </button>
+
+    <!-- CONSULTA RECIBO -->
+    <button id="btn-consultarecibo" class="kiosk-btn btn-pagos" onclick="handleBtn('consultarecibo')">
+      <div class="btn-icon">
+        <svg viewBox="0 0 24 24">
+          <rect x="2" y="5" width="20" height="14" rx="2"/>
+          <path d="M2 10h20"/>
+          <path d="M6 15h4M14 15h4"/>
+        </svg>
+      </div>
+      <span class="btn-label">Consulta Recibo</span>
+      <span class="btn-desc">Revisa y descarga tu recibo de luz fácilmente</span>
+    </button>
+
+    <!-- TRÁMITE -->
+    <button id="btn-tramite" class="kiosk-btn btn-tramites" onclick="handleBtn('tramite')">
+      <div class="btn-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M9 12h6M9 16h6M17 21H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7l5 5v11a2 2 0 0 1-2 2z"/>
+          <path d="M13 3v5h5"/>
+        </svg>
+      </div>
+      <span class="btn-label">Trámite</span>
+      <span class="btn-desc">Solicitudes frecuentes: conexiones, cambio de medidor y más</span>
+    </button>
+
+    <!-- RECLAMOS -->
+    <button id="btn-reclamos" class="kiosk-btn btn-reclamos" onclick="handleBtn('reclamos')">
+      <div class="btn-icon">
+        <svg viewBox="0 0 24 24">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+      </div>
+      <span class="btn-label">Reclamos</span>
+      <span class="btn-desc">Reporta inconvenientes con tu servicio eléctrico</span>
+    </button>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>SERSA &nbsp;|&nbsp; Servicios Eléctricos Rioja S.A. &nbsp;·&nbsp; Rioja, San Martín – Perú</footer>
+
+  <script>
+    const urls = {
+      osinergmin:    'https://www.gob.pe/osinergmin',
+      consultarecibo:'https://sersa.pe/html/paginas/consultarecibo.html',
+      tramite:       'https://sersa.pe/html/paginas/solicitudesfrecuentes.html',
+      reclamos:      'https://sersa.pe/html/paginas/reclamos.html'
+    };
+
+    function handleBtn(option) {
+      window.location.href = urls[option];
+    }
+
+    // ── Reloj digital ──────────────────────────────
+    const DAYS   = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
+    const MONTHS = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+
+    function updateClock() {
+      const now  = new Date();
+      let   h    = now.getHours();
+      const m    = String(now.getMinutes()).padStart(2,'0');
+      const s    = String(now.getSeconds()).padStart(2,'0');
+      const ampm = h >= 12 ? 'PM' : 'AM';
+      h = h % 12 || 12;
+
+      document.getElementById('clock-time').textContent = `${String(h).padStart(2,'0')}:${m}:${s}`;
+      document.getElementById('clock-ampm').textContent = ampm;
+      document.getElementById('clock-date').textContent =
+        `${DAYS[now.getDay()]}, ${now.getDate()} de ${MONTHS[now.getMonth()]} ${now.getFullYear()}`;
+    }
+
+    updateClock();
+    setInterval(updateClock, 1000);
+  </script>
+</body>
+</html>
